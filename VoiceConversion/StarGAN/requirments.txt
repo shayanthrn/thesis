@@ -1,0 +1,7 @@
+SoundFile
+torchaudio
+munch
+parallel_wavegan
+torch
+pydub
+tensorboard

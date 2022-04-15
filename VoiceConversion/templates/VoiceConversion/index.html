@@ -47,7 +47,8 @@
         <div id="services" class="basic-1">
             
             <div class="container">
-            <form enctype="multipart/form-data" action="/convertWAV" method="post">
+            <form enctype="multipart/form-data" action="/convertWav" method="post">
+                {% csrf_token %}
                <input type="file" name="source" accept="audio/wav">
                <select name="speaker" style="width: 300px; padding: 4px;" class="form-select" aria-label="Default select example">
                 <option disabled>-Choose from the list below</option>

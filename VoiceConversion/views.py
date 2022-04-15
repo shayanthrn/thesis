@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
+from .inference import inference
+from django.http import FileResponse
 
 class MainView(View):
 
@@ -10,4 +12,11 @@ class MainView(View):
 class convertWavView(View):
 
     def post(self, request):
-        pass
+        file = open('./source.wav', 'wb')
+        file.write(request.FILES['source'].file.read())
+        inference('./source.wav',request.POST['speaker'])
+        response = FileResponse(open("./converted.wav", 'rb'))
+        return response
+
+    def get(self, request):
+        return redirect("/")
