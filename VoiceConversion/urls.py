@@ -6,5 +6,7 @@ app_name = 'VoiceConversion'
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
-    path('convertWav',convertWavView.as_view(),name='convert wav')
+    path('eval/', EvalView.as_view(), name='eval'),
+    path('about/', AboutView.as_view(), name='about'),
+    path('contactus/', ContactView.as_view(), name='contact'),
 ]

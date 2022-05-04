@@ -6,65 +6,160 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
         <!-- Webpage Title -->
-        <title>Webpage Title</title>
-        
+        <title>سامانه تبدیل صدا</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
         <!-- Styles -->
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
         <link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">
-        <link href="{% static 'css/swiper.css' %}" rel="stylesheet">
-        <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
         <link href="{% static 'css/styles.css' %}" rel="stylesheet">
-        
+        <link href="{% static 'css/main.css' %}" rel="stylesheet">
     </head>
     
-    <body data-spy="scroll" data-target=".fixed-top">
-        
-
-        <!-- Header -->
-        <header id="header" class="header">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-5 left-wrapper">
-                        <div class="text-container">
-                            <h2>حسن کاظمی طهرانی<br/>Hassan Kazemi Tehrani <br/>دکتر حسین زینلی<br/> Prof. Hossein Zeinali<br/> </h2>
-                        </div> <!-- end of text-container -->
-                    </div> <!-- end of col -->
-                    <div class="col-xl-7 right-wrapper">
-                        <div class="text-container">
-                            <h2 id="js-rotating" class="h2-large">تبدیل صدای<br/> Any-To-Many<br/>  دلخواه به چند <br/> Voice Conversion<br/> در زبان فارسی  <br/> in Persian Speech<br/> به کمک شبکه استارگن <br/>using StarGANv2-VC</h2>
-                        </div> <!-- end of text-container -->
-                    </div> <!-- end of col -->
-                </div> <!-- end of row -->
-            </div> <!-- end of container-fluid -->
-        </header> <!-- end of header -->
-        <!-- end of header -->
-
-        <h2 dir="rtl" style="float: right; margin-right: 50px;">لطفا صدای خود و گوینده مورد نظر خود را انتخاب کنید و سپس دکمه تایید را فشار دهید.</h2>
-        <h2 dir="ltr" style="float: left; margin-left: 50px;">Please upload your desired voice and speaker, then press the submit button to convert your voice.</h2>
-        <!-- Services -->
-        <div id="services" class="basic-1">
-            
-            <div class="container">
-            <form enctype="multipart/form-data" action="/convertWav" method="post">
-                {% csrf_token %}
-               <input type="file" name="source" accept="audio/wav">
-               <select name="speaker" style="width: 300px; padding: 4px;" class="form-select" aria-label="Default select example">
-                <option disabled>-Choose from the list below</option>
-                {% for i in data %}
-                    {% if i < 10 %}
-                        <option value="00{{i}}">Speaker {{ i }}</option>
+    <body>
+        <div class="container">
+            <menu id="side-menu" class="FadeAway sidebar"> 
+                  <ul class="section">
+                    {% if select == "1" %}
+                    <div class="item selected">
+                      <a class="item-link" href="/">
+                        <span class="iconify" data-icon="simple-line-icons:microphone"></span>
+                        سامانه تبدیل صدا
+                      </a>
+                    </div>
                     {% else %}
-                        <option value="0{{i}}">Speaker {{ i }}</option>
+                    <div class="item">
+                      <a class="item-link" href="/">
+                        <span class="iconify" data-icon="simple-line-icons:microphone"></span>
+                        سامانه تبدیل صدا
+                      </a>
+                    </div>
                     {% endif %}
-                {% endfor %}
-              </select>
-               <button style="margin-left: 200px;" class="btn btn-primary" type="submit">submit</button>
-            </form>
-            </div> <!-- end of container -->
-        </div> <!-- end of basic-1 -->
-        <!-- end of services -->
-
+                    {% if select == "2" %}
+                    <div class="item selected">
+                      <a class="item-link" href="/eval">
+                        <span class="iconify" data-icon="bx:bar-chart-square"></span>
+                        ارزیابی
+                      </a>
+                    </div>
+                    {% else %}
+                    <div class="item">
+                      <a class="item-link" href="/eval">
+                        <span class="iconify" data-icon="bx:bar-chart-square"></span>
+                        ارزیابی
+                      </a>
+                    </div>
+                    {% endif %}
+                    {% if select == "3" %}
+                    <div class="item selected">
+                      <a class="item-link" href="/about">
+                        <span class="iconify" data-icon="bx:book-alt"></span>
+                        درباره مدل
+                      </a>
+                    </div>
+                    {% else %}
+                    <div class="item">
+                      <a class="item-link" href="/about">
+                        <span class="iconify" data-icon="bx:book-alt"></span>
+                        درباره مدل
+                      </a>
+                    </div>
+                    {% endif %}
+                  </ul>
+                  <ul class="section">
+                    {% if select == "4" %}
+                    <div class="item selected">
+                      <a class="item-link" href="/contactus">
+                        <span class="iconify" data-icon="carbon:email"></span>
+                        ارتباط با ما
+                      </a>
+                    </div>
+                    {% else %}
+                    <div class="item">
+                      <a class="item-link" href="/contactus">
+                        <span class="iconify" data-icon="carbon:email"></span>
+                        ارتباط با ما
+                      </a>
+                    </div>
+                    {% endif %}
+                  </ul>
+            </menu>
+            
+            <div class="main">
+              <div class="wrapper">
+                <div style="overflow: scroll;margin: 20px; height: 500px;text-align: end; overflow-x: hidden;" class="centered-box">
+                  <h2 class="form__title">
+                    گوینده های نمونه
+                  </h2>
+                  {% for i in speaker %}
+                  گوینده شماره {{i}}
+                  <audio style="margin: 10px;" controls="controls">  <source type="audio/wav" src="/static/demo/p0{{i}}.wav">&lt;/source&gt; </audio>
+                  {% endfor %}
+                </div>
+                <div class="centered-box">
+                  <form action="#" method="post" enctype="multipart/form-data" class="form">
+                    <h2 class="form__title">
+                      دیپ‌ماین
+                    </h2>
+                    <p> اطلاعات شما نزد سرور ما محفوظ باقی می ماند و صرفا جهت ارتقا سیستم از آن استفاده خواهد شد</p>
+                    <p> برای شروع صدایی از خود آپلود و صدای مورد نظر خود را جهت تغییر انتخاب کنید</p>
+                    {% csrf_token %}
+                    <label style="color: black;" for="gender">
+                      <span class="iconify" data-icon="bi:gender-ambiguous"></span>
+                      جنسیت
+                    </label>
+                    <select name="gender" id="gender" class="input">
+                      <option value="male">مرد</option>
+                      <option value="female">زن</option>
+                    </select>
+                    <label style="color: black;" for="age">
+                      <span class="iconify" data-icon="ic:baseline-cake"></span>
+                      سن
+                    </label>
+                    <select name="age" id="age" class="input">
+                      {% for i in age %}
+                        <option value="{{i}}">{{ i }}</option>
+                      {% endfor %}
+                    </select>
+                    
+                    <label style="color: black;" for="speaker">
+                      <span class="iconify" data-icon="carbon:user-speaker"></span>
+                      گوینده
+                    </label>
+                    <select name="speaker" id="speaker" class="input">
+                      {% for i in speaker %}
+                      {% if i < 10 %}
+                        <option value="00{{i}}">{{ i }} گوینده شماره </option>
+                      {% else %}
+                        <option value="0{{i}}">{{ i }} گوینده شماره </option>
+                      {% endif %}
+                      {% endfor %}
+                    </select>
+                    <label style="color: black;" for="audio">
+                      <span class="iconify" data-icon="simple-line-icons:microphone"></span>
+                      فایل صدا
+                    </label>
+                    <input onchange="validateSize(this)" type="file" name="audio" id="audio" accept="audio/wav" required>
+                    <button type="submit" class="btn">آپلود</button>
+                    {% if target %}
+                    <audio style="margin: 10px;" controls="controls">  <source type="audio/wav" src="{{ target }}">&lt;/source&gt; </audio>
+                    <a class="link link5" href="/eval/">ثبت ارزیابی</a>
+                    {% endif %}
+                    <p> تا کنون {{ totalusers }} صدا به کمک این سرویس تبدیل شده است</p>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <div  class="footer"><span>تمامی حقوق برای توسعه دهندگان، حسن کاظمی طهرانی و حسین زینلی محفوظ است</span></div>
     </body>
+    <script>
+      function validateSize(input) {
+        const fileSize = input.files[0].size / 1024 / 1024; // in MiB
+        if (fileSize > 2) {
+        alert('سایز فایل شما بسیار زیاد است.');
+        $(audio).val('');
+        }
+      }
+    </script>
 </html>
