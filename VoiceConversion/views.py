@@ -25,14 +25,18 @@ class MainView(View):
         if(filesize>2):
             return HttpResponseForbidden("file size not allowed")
         else:
+            timestamp = int(timezone.now().timestamp())
+            filename = f'./sources/{timestamp}.wav'
+            targetfile = f'./static/converted/{timestamp}.wav'
             if(request.FILES['audio'].content_type=="audio/wav"):
-                timestamp = int(timezone.now().timestamp())
-                filename = f'./sources/{timestamp}.wav'
-                targetfile = f'./static/converted/{timestamp}.wav'
                 file = open(filename, 'wb')
                 file.write(request.FILES['audio'].file.read())
+            elif(request.FILES['audio'].content_type=="audio/mpeg" or request.FILES['audio'].content_type=="audio/mpeg3"):
+                file = open(f"./temp/{timestamp}.mp3", 'wb')
+                file.write(request.FILES['audio'].file.read())
+                sound = AudioSegment.from_mp3(f"./temp/{timestamp}.mp3")
+                sound.export(filename, format="wav")
             else:
-                # TODO convert format
                 return HttpResponseForbidden("unsupported format file")
 
             SourceVoices.objects.create(age=request.POST.get('age','20'),gender=request.POST.get('gender','male'),file = filename)
