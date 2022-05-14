@@ -87,7 +87,7 @@
             <div class="main">
               <div class="wrapper">
                 <div class="centered-box">
-                  <table>
+                  <table class="table">
                     <thead>
                       <tr>
                         <th style="text-align: center">&nbsp;</th>
@@ -125,7 +125,7 @@
                     <p style="text-align: right;"> با ثبت ارزیابی خود مارا در بهبود سیستم یاری فرمایید</p>
 
                   
-                  <div>
+                  <div class="abc">
                     <p style="text-align: right;">با توجه به جدول زیر نظر خود را در رابطه با مدل وارد کنید</p>
                     <form method="post" style="float: right;display: inline-grid;">
                       {% csrf_token %}
@@ -141,12 +141,12 @@
                       <input onchange="validatenumber(this)" style="width: fit-content;" type="number" name="rate" id="rate" class="input" required>
                       <button type="submit" class="btn">ثبت</button>
                     </form>
-                    <table style="text-align: right;">
+                    <table style="direction: rtl;">
                       <thead>
                         <th style="text-align: center">نمره</th>
                         <th style="text-align: center">توضیح</th>
                       </thead>
-                      <tbody>
+                      <tbody style="text-align-last: right;">
                         <tr>
                           <td>
                             ۱
@@ -200,12 +200,12 @@
             </div>
         </div>
         <!-- footer -->
-        <div  class="footer"><span>تمامی حقوق برای توسعه دهندگان، حسن کاظمی طهرانی و حسین زینلی محفوظ است</span></div>
+        <div  class="footer"><span>تمامی حقوق برای آزمایشگاه فناوری زبان و گفتار محفوظ است</span></div>
     </body>
     <script>
       function validatenumber(input) {
         if(input.value>5 || input.value<1){
-          alert("امتیاز وارد شده در محدوده امتیازات مجاز نمی باشد")
+          alert("امتیاز وارد شده در محدوده امتیازات مجاز نمی باشد. محدوده مجاز:(۰ تا ۵)")
           input.value=1
         }
       }

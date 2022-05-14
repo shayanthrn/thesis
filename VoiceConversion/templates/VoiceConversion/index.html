@@ -86,19 +86,11 @@
             
             <div class="main">
               <div class="wrapper">
-                <div style="overflow: scroll;margin: 20px; height: 500px;text-align: end; overflow-x: hidden;" class="centered-box">
-                  <h2 class="form__title">
-                    گوینده های نمونه
-                  </h2>
-                  {% for i in speaker %}
-                  گوینده شماره {{i}}
-                  <audio style="margin: 10px;" controls="controls">  <source type="audio/wav" src="/static/demo/p0{{i}}.wav">&lt;/source&gt; </audio>
-                  {% endfor %}
-                </div>
+                
                 <div class="centered-box">
                   <form action="#" method="post" enctype="multipart/form-data" class="form">
                     <h2 class="form__title">
-                      دیپ‌ماین
+                      آزمایشگاه فناوری زبان و گفتار
                     </h2>
                     <p> اطلاعات شما نزد سرور ما محفوظ باقی می ماند و صرفا جهت ارتقا سیستم از آن استفاده خواهد شد</p>
                     <p> برای شروع صدایی از خود آپلود و صدای مورد نظر خود را جهت تغییر انتخاب کنید</p>
@@ -138,7 +130,7 @@
                       <span class="iconify" data-icon="simple-line-icons:microphone"></span>
                       فایل صدا
                     </label>
-                    <input onchange="validateSize(this)" type="file" name="audio" id="audio" accept="audio/wav" required>
+                    <input onchange="validateSize(this)" type="file" name="audio" id="audio" accept="audio/wav,.mp3" required>
                     <button type="submit" class="btn">آپلود</button>
                     {% if target %}
                     <audio style="margin: 10px;" controls="controls">  <source type="audio/wav" src="{{ target }}">&lt;/source&gt; </audio>
@@ -147,17 +139,26 @@
                     <p> تا کنون {{ totalusers }} صدا به کمک این سرویس تبدیل شده است</p>
                   </form>
                 </div>
+                <div style="overflow: scroll;margin: 20px; height: 500px;text-align: end; overflow-x: hidden;" class="centered-box">
+                  <h2 class="form__title">
+                    گوینده های نمونه
+                  </h2>
+                  {% for i in speaker %}
+                  گوینده شماره {{i}}
+                  <audio style="margin: 10px;" controls="controls">  <source type="audio/wav" src="/static/demo/p0{{i}}.wav">&lt;/source&gt; </audio>
+                  {% endfor %}
+                </div>
               </div>
             </div>
         </div>
         <!-- footer -->
-        <div  class="footer"><span>تمامی حقوق برای توسعه دهندگان، حسن کاظمی طهرانی و حسین زینلی محفوظ است</span></div>
+        <div  class="footer"><span>تمامی حقوق برای آزمایشگاه فناوری زبان و گفتار محفوظ است</span></div>
     </body>
     <script>
       function validateSize(input) {
         const fileSize = input.files[0].size / 1024 / 1024; // in MiB
         if (fileSize > 2) {
-        alert('سایز فایل شما بسیار زیاد است.');
+        alert('سایز فایل شما باید کمتر از ۲ مگابایت باشد.');
         $(audio).val('');
         }
       }
