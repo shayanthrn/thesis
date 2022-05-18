@@ -47,7 +47,7 @@ class Inference():
 
     def inference(self, sourcefile, speaker, targetfile):
         # load input wave
-        audio, source_sr = librosa.load(sourcefile, sr=24000)
+        audio, source_sr = librosa.load(sourcefile, sr=24000, duration=10)
         audio = audio / np.max(np.abs(audio))
         audio.dtype = np.float32
         # no reference, using mapping network

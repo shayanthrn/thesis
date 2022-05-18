@@ -5,21 +5,41 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbid
 from .models import *
 from django.utils import timezone
 from pydub import AudioSegment
+from django.utils.decorators import method_decorator
+from ratelimit.decorators import ratelimit
 
 
 
 Inferencer = Inference()
-# done
+
+
+class AssessmentView(View):
+
+    def get(self,request):
+        rates=Rate.objects.all()
+        sum = 0
+        for rate in rates:
+            sum+= rate.rate
+        return HttpResponse(sum/len(rates))
+        
+    def post(self,request):
+        rates=Rate.objects.all()
+        sum = 0
+        for rate in rates:
+            sum+= rate.rate
+        return HttpResponse(sum/len(rates))
+
 class MainView(View):
 
     def __init__(self):
-        
         super().__init__()
 
+    
     def get(self, request):
         countobj, created = TotalNumberOfConverts.objects.get_or_create(id="123")
         return render(request, 'VoiceConversion/index.html',context={'totalusers':countobj.count,'speaker':range(1,65),'age':range(4,80),'select':"1"})
 
+    @method_decorator(ratelimit(key='ip', rate='10/m', method='POST',block=True))
     def post(self, request):
         filesize =(request.FILES['audio'].size/1024)/1024 # in MB
         if(filesize>2):
